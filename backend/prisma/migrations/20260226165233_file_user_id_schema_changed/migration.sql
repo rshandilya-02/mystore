@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "File" ALTER COLUMN "userId" SET DATA TYPE TEXT;

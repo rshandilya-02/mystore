@@ -1,0 +1,15 @@
+node_modules
+# Keep environment variables out of version control
+.env
+
+.env/*
+/generated/prisma
+
+./backend/node_modules
+./backend/env/*
+./backend/env
+
+./frontend/client/node_modules
+./frontend/client/env/*
+.frontend/client/env
+

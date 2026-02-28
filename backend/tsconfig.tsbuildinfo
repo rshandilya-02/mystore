@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/@types/express/index.d.ts","./src/controllers/auth.ts","./src/controllers/s3.controller.ts","./src/lib/prisma.ts","./src/middlewares/auth.middleware.ts","./src/routers/auth.route.ts","./src/routers/s3.route.ts","./src/services/s3.service.ts"],"version":"5.9.3"}
