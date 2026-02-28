@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 16, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/middleware.ts"],"sourcesContent":["import { NextResponse } from \"next/server\";\r\nimport type { NextRequest } from \"next/server\";\r\n\r\nexport function middleware(request: NextRequest) {\r\n    const token = request.cookies.get(\"token\")?.value;\r\n\r\n    if(!token && (request.nextUrl.pathname.startsWith(\"/file\") || request.nextUrl.pathname.startsWith(\"/upload\"))) {\r\n        return NextResponse.redirect(new URL(\"/login\",request.url));\r\n    }\r\n\r\n    return NextResponse.next();\r\n}"],"names":[],"mappings":";;;;AAAA;AAAA;;AAGO,SAAS,WAAW,OAAoB;IAC3C,MAAM,QAAQ,QAAQ,OAAO,CAAC,GAAG,CAAC,UAAU;IAE5C,IAAG,CAAC,SAAS,CAAC,QAAQ,OAAO,CAAC,QAAQ,CAAC,UAAU,CAAC,YAAY,QAAQ,OAAO,CAAC,QAAQ,CAAC,UAAU,CAAC,UAAU,GAAG;QAC3G,OAAO,gMAAY,CAAC,QAAQ,CAAC,IAAI,IAAI,UAAS,QAAQ,GAAG;IAC7D;IAEA,OAAO,gMAAY,CAAC,IAAI;AAC5B"}}]
+}

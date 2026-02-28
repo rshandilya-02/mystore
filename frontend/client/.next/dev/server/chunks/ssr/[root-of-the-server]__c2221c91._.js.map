@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 94, "column": 0}, "map": {"version":3,"sources":["file:///D:/projects/my-drive/frontend/client/services/api/index.ts"],"sourcesContent":["const BACKEND_URL='http://localhost:4000'\r\n\r\nexport const SIGNIN_URL = `${BACKEND_URL}/api/v1/auth/register`;"],"names":[],"mappings":";;;;AAAA,MAAM,cAAY;AAEX,MAAM,aAAa,GAAG,YAAY,qBAAqB,CAAC"}}]
+}
