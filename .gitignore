@@ -1,15 +1,26 @@
+# Node
 node_modules
-# Keep environment variables out of version control
+
+# Next.js
+.next
+out
+
+# Env
 .env
+.env.*
+frontend/client/.env*
+backend/.env*
 
-.env/*
-/generated/prisma
+# Build outputs
+dist
+build
 
-./backend/node_modules
-./backend/env/*
-./backend/env
+# Prisma generated client (if generated locally)
+generated/prisma
 
-./frontend/client/node_modules
-./frontend/client/env/*
-.frontend/client/env
+# Logs
+*.log
 
+# OS
+.DS_Store
+Thumbs.db
