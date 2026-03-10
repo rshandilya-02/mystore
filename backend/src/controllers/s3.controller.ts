@@ -73,9 +73,12 @@ const putObject = async(req:Request,res:Response) => {
     const input = {
          Bucket: bucket_name,
          Key: storageKey, // required
+         ContentType: file_type
     };
     const userId = req.userId;
 
+    const command = new PutObjectCommand(input);
+    const url = await getSignedUrl(client,command,{expiresIn:3600});
     console.log('ready to hit db',input);
     const dbEntry = await prisma.file.create({
         data:{
@@ -86,8 +89,6 @@ const putObject = async(req:Request,res:Response) => {
             userId: userId
         }
     });
-    const command = new PutObjectCommand(input);
-    const url = await getSignedUrl(client,command,{expiresIn:3600});
     // return url;
 
     

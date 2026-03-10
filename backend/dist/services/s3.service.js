@@ -10,6 +10,7 @@ const client = new S3Client({
         secretAccessKey: secretAccessKey,
         accessKeyId: accessKeyId
     },
+    requestChecksumCalculation: "WHEN_REQUIRED"
 });
 export default client;
 //# sourceMappingURL=s3.service.js.map

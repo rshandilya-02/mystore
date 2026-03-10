@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { prisma } from "../lib/prisma.js";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import crypto from 'crypto';
 dotenv.config();
 const register = async (req, res) => {
     const data = req.body;
@@ -99,5 +100,117 @@ const login = async (req, res) => {
         });
     }
 };
-export { register, login };
+const cliLogin = async (req, res) => {
+    try {
+        //db call and set verified set to true
+        const deviceId = crypto.randomUUID();
+        console.log("generated uuid ", deviceId);
+        const userId = crypto.randomUUID();
+        console.log("generate userId ", userId);
+        //generate userId 
+        const verificationUrl = `http://localhost:3000/authentication?deviceId=${deviceId}`;
+        const expiryDate = new Date(Date.now() + 5 * 60 * 1000);
+        const data = await prisma.cliAuth.create({
+            data: {
+                device_code: deviceId,
+                user_code: userId,
+                verified: false,
+                expiryDate: expiryDate,
+                token: ''
+            }
+        });
+        console.log("data is ", data);
+        return res.status(200).json({
+            message: " cli code sent back ",
+            deviceId: deviceId,
+            userCode: userId,
+            verificationUrl: verificationUrl
+        });
+    }
+    catch (error) {
+        console.log("error occured to cli Login");
+        return res.status(503).json({
+            message: "error occured during token cli Login"
+        });
+    }
+};
+const validateCli = async (req, res) => {
+    try {
+        //this device_code should be fetched from query_params to body 
+        const { device_code, user_code } = req.body;
+        console.log("this is validata cli ", device_code, user_code);
+        const id = req.userId;
+        if (!device_code || !user_code || !id) {
+            return res.status(403).json({
+                message: "missing authentication code"
+            });
+        }
+        ;
+        const data = await prisma.cliAuth.findFirst({
+            where: {
+                device_code: device_code
+            }
+        });
+        const original_user_code = data?.user_code;
+        if (!original_user_code || user_code !== original_user_code)
+            return res.status(403).json({
+                message: "code mismatch"
+            });
+        const options = {
+            id: id,
+        };
+        const secret = process.env.JWT_SECRET;
+        const token = await jwt.sign(options, secret);
+        await prisma.cliAuth.update({
+            where: {
+                device_code: device_code
+            },
+            data: {
+                verified: true,
+                token: token,
+                expiryDate: new Date(Date.now() + 10 * 60 * 1000)
+            }
+        });
+        return res.status(200).json({
+            message: "cli validated",
+            token: token
+        });
+    }
+    catch (error) {
+        console.log("error during validateCli");
+        return res.status(503).json({
+            message: "error during cli authentication"
+        });
+    }
+};
+const CheckVerification = async (req, res) => {
+    console.log("res body ", req.body);
+    // console.log("request is ",req);
+    const { device_code } = req.body;
+    try {
+        const data = await prisma.cliAuth.findFirst({
+            where: {
+                device_code: device_code
+            }
+        });
+        if (data?.verified) {
+            return res.status(200).json({
+                verified: true,
+                token: data.token
+            });
+        }
+        ;
+        return res.status(201).json({
+            verified: false,
+            token: null
+        });
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(302).json({
+            message: "verification error"
+        });
+    }
+};
+export { register, login, cliLogin, validateCli, CheckVerification };
 //# sourceMappingURL=auth.js.map

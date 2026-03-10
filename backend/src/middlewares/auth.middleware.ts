@@ -8,12 +8,21 @@ dotenv.config();
 
 const auth = async(req:Request,res:Response,next:NextFunction) => {
     
-    // const auth_key = req.headers['authorization'] || '';
+    console.log("inside auth ",auth);
+    const auth_key = req.headers['authorization'] || '';
+
+    console.log('this is auth_key ' ,auth_key); 
+
     // if(auth_key.length<=0) return ; 
 
-    // const token = auth_key.split(' ')[1] || '';
+    const auth_token = auth_key.split(' ')[1] || '';
+
+    console.log("this is auth_token ",auth_token);
+
+
     console.log("this is req cookies ",req.cookies);
-    const token = req.cookies.token;
+    const token = req.cookies.token || auth_token;
+
 
     console.log("cookies token is ",token);
 

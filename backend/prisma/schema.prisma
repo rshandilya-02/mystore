@@ -13,9 +13,10 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   email String @unique
   password String 
+  cli CliAuth[]
 }
 
 model File {
@@ -26,4 +27,15 @@ model File {
   file_original_name String
   size Int?
   createdAt DateTime @default(now())
+}
+
+model CliAuth {
+  id String @id @default(uuid())
+  user_code String
+  device_code String @unique
+  verified    Boolean
+  expiryDate DateTime
+  userId  String?
+  token String
+  user User?  @relation(fields: [userId],references: [id])
 }

@@ -14,6 +14,7 @@ const client = new S3Client(
                 secretAccessKey: secretAccessKey,
                 accessKeyId: accessKeyId
             },
+            requestChecksumCalculation: "WHEN_REQUIRED"
         }
     );
 

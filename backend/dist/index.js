@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import { authRouter } from './routers/auth.route.js';
 import { S3Client, ListBucketsCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import { s3Router } from './routers/s3.route.js';
+//cli modifications 
 dotenv.config();
 const app = express();
 app.use(cookieParser());
