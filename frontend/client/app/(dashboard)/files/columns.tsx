@@ -70,11 +70,14 @@ export const columns: ColumnDef<File>[] = [
       }
  
       return (
-        <div className="flex items-center ">
-            <p>{row.getValue("file_original_name")}</p>
+       
+          <div className="flex items-center gap-2">
+  <span className="text-green-400">📄</span>
+  <p className="font-medium">{row.getValue("file_original_name")}</p>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-zinc-800">
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
