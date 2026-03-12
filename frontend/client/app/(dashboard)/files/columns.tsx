@@ -41,7 +41,8 @@ export const columns: ColumnDef<File>[] = [
         }, {
             headers:{
                     "authorization":`Bearer ${token}`
-                }
+                },
+            withCredentials:true
             });
         console.log('res for download url ',res);
 
@@ -62,7 +63,8 @@ export const columns: ColumnDef<File>[] = [
         }, {
             headers:{
                     "authorization":`Bearer ${token}`
-                }
+                },
+                withCredentials:true
             });
 
       }
