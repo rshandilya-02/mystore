@@ -7,7 +7,7 @@ async function request(endpoint: string,options: any  = {}) {
 
     const token = getToken();
 
-    // console.log("this is token ",token);
+    console.log("this is token ",token);
 
     const headers = {
         "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export const api = {
         return request(endpoint,{method: "GET"})
     },
     post(endpoint: string , body: any) {
-        // console.log("body is ",body);
+        console.log("body is ",body);
         return request(endpoint,{
             method: "POST",
             body: JSON.stringify(body)

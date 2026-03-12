@@ -3,7 +3,7 @@ import figlet from "figlet";
 
 import { login } from "./commands/login.js";
 import { fetchFiles } from "./commands/fetchFiles.js";
-import { fileUpload } from "./commands/fileUpload.js";
+import { fileUpload, folderUpload } from "./commands/fileUpload.js";
 
 console.log(figlet.textSync("myDrive"));
 
@@ -27,8 +27,13 @@ program
 program
     .command("upload <filePath>")
     .description("Upload your files")
-    .action((filePath) => {
-      fileUpload(filePath);
+    .option("-d --dir","Upload a directory")
+    .action((path,option) => {
+      if(option.dir) {
+        folderUpload(path);
+      }else {
+        fileUpload(path);
+      }
     })
 
 program.parse();

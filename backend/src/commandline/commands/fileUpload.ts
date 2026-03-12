@@ -61,10 +61,11 @@ export const fileUpload = async(filePath:string) => {
         progressBar.update(uploadedBytes);
     });
 
-    // console.log("response is ",res);
+//   earlier commented code 
+//     console.log("response is ",res);
 
-    // const p_url = res.url ; 
-    // console.log("p url is ",p_url);
+//     const p_url = res.url ; 
+//     console.log("p url is ",p_url);
 
 //     const filePushTos3 = await fetch(res.url, {
 //     method: "PUT",
@@ -74,6 +75,7 @@ export const fileUpload = async(filePath:string) => {
 //     },
 //     duplex:"half"
 // } as any);
+// commented code end 
 
 
 
@@ -101,4 +103,141 @@ try {
     // console.log("created Data ",create_date);
     return ; 
 
+};
+
+export const folderUpload = async(dirPath: string) => {
+  let index = 0 ; 
+
+  let files:any = [];
+
+  try {
+
+  const res = await uploadDir(dirPath);
+  console.log('response is f ',res);
+
+  const presigned_url = await api.post('/s3/fetchBulkUrl',res);
+
+  console.log("presigned ulr is ", presigned_url);
+
+  const base_name = path.basename(dirPath);
+
+  await Promise.all(presigned_url.url.map(async(urlObj: any)=>{
+    console.log("file_name ",urlObj);
+    const {filename,url} = urlObj;
+
+   console.log("sub filename ",filename ,base_name);
+
+    // const absolute_path = dirPath+filename.substring(base_name.length);
+
+    const relative = filename.substring(base_name.length + 1);
+    const absolute_path = path.join(dirPath, relative);
+
+    console.log("absolute path to read file data ",absolute_path);
+
+    const data = fs.createReadStream(absolute_path);
+
+    // const data = await fs.promises.readFile(absolute_path);
+    
+
+    // console.log("url obj file_size ",urlObj);
+
+    const filePushTos3 = await axios.put(url, data, {
+    headers: {
+      "Content-Type": urlObj.fileType,
+      "Content-Length": urlObj.size
+    }
+  });
+
+
+  // console.log(filePushTos3.data);
+})
+);
+console.log("folder uploaded 😎");
+  }catch(error){
+    console.log("couldn't upload file , please try again ");
+  }
+
+
+};
+
+
+
+const uploadDir  = async(dirPath:string,original_base_name="") => {
+
+  //need file_names of each particular file 
+
+
+  /*
+
+    pictures
+        2025
+          a.jpg
+        b.jpg
+        c.jpg
+
+
+        
+        pictures/2025/a.jpg
+        pictures/b.jpg
+        ----------------------------------------------------
+        pictures/c.jpg
+        */
+
+     const res = await fs.promises.readdir(dirPath);
+
+     console.log("dir path is ",dirPath);
+
+    //  console.log("responsen is " ,res);
+
+     let files:any[] = [];
+
+     
+     await Promise.all(res.map(async(fname)=>{
+       const absolute_file_path = path.join(dirPath,fname);
+       
+       
+       const base_name = path.basename(dirPath);
+       
+       console.log(' base name is ',base_name);
+       console.log('original base name ',original_base_name);
+       
+       let stat = await fs.promises.stat(absolute_file_path);
+       if(stat.isFile()) {
+         
+        // ,file_size:stat.size,file_type:
+
+        const file_size=stat.size;
+        const file_type = mime.lookup(absolute_file_path) || 'application/octet-stream';
+        //files , so push into files ,
+        if(original_base_name.length>0) 
+        files.push({file_name:original_base_name+"\\"+fname,file_size:file_size,file_type:file_type});
+      else files.push({file_name:base_name+"\\"+fname,file_size:file_size,file_type:file_type});
+
+
+      } else if(stat.isDirectory()) {
+
+        //if directory , recursion to fetch file names 
+        const relPath = original_base_name.length>0?original_base_name+"\\"+fname: base_name+"\\"+fname;
+        console.log("real path ",relPath);
+        console.log("absolute path ",absolute_file_path);
+        const data = await uploadDir(absolute_file_path,relPath);
+        files.push(...data);
+
+      }
+
+     })
+    )
+
+     return files;
+
 }
+
+
+
+
+// see this , C:\Users\shand\Downloads
+//file path , C:\Users\shand\Downloads\profies
+
+//needed Downloads\profiles
+
+

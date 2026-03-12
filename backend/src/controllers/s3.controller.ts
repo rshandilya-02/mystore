@@ -102,6 +102,63 @@ const putObject = async(req:Request,res:Response) => {
 
 }
 
+const putObjectFolder = async(req:Request,res:Response) => {
+    const files = req.body ; 
+    const bucket_name = process.env.BUCKET_NAME!;
+
+    const userId = req.userId;
+
+    
+
+    const urls = await Promise.all(files.map(async (file:any) => {
+
+        // const cor_file_name = file.file_name.
+        const key = file.file_name.replace(/\\/g, "/");
+        const input = {
+            Bucket: bucket_name,
+            Key: key,
+            ContentType: file.file_type
+        };
+
+        const command = new PutObjectCommand(input);
+
+        const url = await getSignedUrl(client,command,{expiresIn:3600});
+
+        console.log('ready to hit db',input);
+
+        const storageKey = Math.random().toString()+file.file_name;
+
+        const dbEntry = await prisma.file.create({
+            data:{
+                file_original_name: key,
+                file_type: file.file_type,
+                size: file.file_size,
+                storage_key: storageKey,
+                userId: userId
+            }
+        });
+        // return url;
+
+        
+        console.log('db entry is ',dbEntry);
+
+        console.log('put url is ',url);
+
+        return {filename:key,fileType:file.file_type,size:file.file_size,url:url};
+        
+    })
+);
+    
+    console.log("urls is ",urls);
+
+    return res.status(200).json({
+        message:"presigned url fetched",
+        url:urls
+    });
+    
+
+}
+
 const deleteObject = async(req:Request,res:Response) => {
 
     const userId = req.userId; 
@@ -178,4 +235,4 @@ const fetchList = async(req:Request,res:Response) => {
     }
 }
 
-export {putObject,fetchList,getObject,deleteObject};
+export {putObject,fetchList,getObject,deleteObject,putObjectFolder};
