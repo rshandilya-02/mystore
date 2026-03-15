@@ -109,7 +109,11 @@ const login = async(req:Request,res:Response) => {
         const secret:string = process.env.JWT_SECRET!;
         const token = await jwt.sign(options,secret);
 
-        res.cookie('token',token,{httpOnly:true});
+        res.cookie('token',token,{
+            httpOnly:true,
+            secure:true,
+            sameSite:"none"
+        });
 
         return res.status(200).json({
             message: "loggedin successfully",
