@@ -40,7 +40,7 @@ export async function fetchFiles() {
             ]);
         });
 
-        console.log(table.toString());
+        // console.log(table.toString());
 
     } catch (error) {
 

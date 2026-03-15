@@ -7,7 +7,7 @@ async function request(endpoint: string,options: any  = {}) {
 
     const token = getToken();
 
-    console.log("this is token ",token);
+    // console.log("this is token ",token);
 
     const headers = {
         "Content-Type": "application/json",

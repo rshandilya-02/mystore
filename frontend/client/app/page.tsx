@@ -8,6 +8,11 @@ import { Terminal, CloudUpload, Folder } from "lucide-react";
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-black text-white">
+
+      <nav className="justify-end mr-[1%] flex w-full gap-3 p-[1%]">
+        <div><Button className="bg-yellow-400 text-black hover:text-white hover:bg-yellow-600">signUp</Button></div>
+        <div><Button variant={"secondary"} className="text-black">Login</Button></div>
+      </nav>
      
       <section className="px-8 py-24 max-w-6xl mx-auto text-center">
         <motion.h1

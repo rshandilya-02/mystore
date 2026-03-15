@@ -1,6 +1,6 @@
 import { type Request,type Response } from "express";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { DeleteObjectCommand, GetObjectCommand,  PutObjectCommand } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, GetObjectCommand,  PutObjectCommand, type PutObjectCommandInput } from "@aws-sdk/client-s3";
 import client from "../services/s3.service.js";
 import { prisma } from "../lib/prisma.js";
 
@@ -13,7 +13,7 @@ const getObject = async(req:Request,res:Response) =>  {
 
     const {id} = req.body ; 
 
-    console.log('this is getObject userId and id ',userId,id);
+    // console.log('this is getObject userId and id ',userId,id);
 
     if(!userId || !id) {
         return res.status(200).json({
@@ -70,16 +70,17 @@ const putObject = async(req:Request,res:Response) => {
     
     //create db request
     const storageKey = Math.random().toString()+key;
-    const input = {
+    const input: PutObjectCommandInput = {
          Bucket: bucket_name,
          Key: storageKey, // required
-         ContentType: file_type
+         ContentType: file_type,
+         ServerSideEncryption: "AES256" 
     };
     const userId = req.userId;
 
     const command = new PutObjectCommand(input);
     const url = await getSignedUrl(client,command,{expiresIn:3600});
-    console.log('ready to hit db',input);
+    // console.log('ready to hit db',input);
     const dbEntry = await prisma.file.create({
         data:{
             file_original_name: file_name,
@@ -92,9 +93,9 @@ const putObject = async(req:Request,res:Response) => {
     // return url;
 
     
-    console.log('db entry is ',dbEntry);
+    // console.log('db entry is ',dbEntry);
 
-    console.log('put url is ',url);
+    // console.log('put url is ',url);
      return res.status(200).json({
         message:"presigned url fetched",
         url:url
@@ -124,7 +125,7 @@ const putObjectFolder = async(req:Request,res:Response) => {
 
         const url = await getSignedUrl(client,command,{expiresIn:3600});
 
-        console.log('ready to hit db',input);
+        // console.log('ready to hit db',input);
 
         const storageKey = Math.random().toString()+file.file_name;
 
@@ -140,16 +141,16 @@ const putObjectFolder = async(req:Request,res:Response) => {
         // return url;
 
         
-        console.log('db entry is ',dbEntry);
+        // console.log('db entry is ',dbEntry);
 
-        console.log('put url is ',url);
+        // console.log('put url is ',url);
 
         return {filename:key,fileType:file.file_type,size:file.file_size,url:url};
         
     })
 );
     
-    console.log("urls is ",urls);
+    // console.log("urls is ",urls);
 
     return res.status(200).json({
         message:"presigned url fetched",

@@ -8,23 +8,23 @@ dotenv.config();
 
 const auth = async(req:Request,res:Response,next:NextFunction) => {
     
-    console.log("inside auth ",auth);
+    // console.log("inside auth ",auth);
     const auth_key = req.headers['authorization'] || '';
 
-    console.log('this is auth_key ' ,auth_key); 
+    // console.log('this is auth_key ' ,auth_key); 
 
     // if(auth_key.length<=0) return ; 
 
     const auth_token = auth_key.split(' ')[1] || '';
 
-    console.log("this is auth_token ",auth_token);
+    // console.log("this is auth_token ",auth_token);
 
 
-    console.log("this is req cookies ",req.cookies);
+    // console.log("this is req cookies ",req.cookies);
     const token = req.cookies.token || auth_token;
 
 
-    console.log("cookies token is ",token);
+    // console.log("cookies token is ",token);
 
     if(!token) return ; 
 
@@ -32,13 +32,13 @@ const auth = async(req:Request,res:Response,next:NextFunction) => {
 
     const check = jwt.verify(token,JWT_SECRET);
 
-    console.log('this is check ',check);
+    // console.log('this is check ',check);
 
     const payloadId = (check as JwtPayload).id;
 
     req.userId = payloadId.toString();
 
-    console.log('this is userId ',payloadId);
+    // console.log('this is userId ',payloadId);
 
     next(); 
 

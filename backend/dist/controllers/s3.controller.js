@@ -53,7 +53,8 @@ const putObject = async (req, res) => {
     const input = {
         Bucket: bucket_name,
         Key: storageKey, // required
-        ContentType: file_type
+        ContentType: file_type,
+        ServerSideEncryption: "AES256"
     };
     const userId = req.userId;
     const command = new PutObjectCommand(input);
