@@ -17,8 +17,12 @@ dotenv.config();
 const app = express();
 app.use(cookieParser());
 
+const server_url=process.env.SERVER_URL;
+
+console.log("server_url ",server_url);
+
 app.use(cors({
-  origin: "https://mystore-olive.vercel.app/",
+  origin: server_url,
   credentials: true
 }));
 app.use(cookieParser());
