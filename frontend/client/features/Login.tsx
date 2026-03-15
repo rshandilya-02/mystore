@@ -26,9 +26,6 @@ export default function LoginForm() {
         {
           email: data.email,
           password: data.password,
-        },
-        {
-          withCredentials: true,
         }
       );
 
