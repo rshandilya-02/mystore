@@ -19,28 +19,22 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    try {
-      const res = await axios.post(
-        "/api/login",
-        {
-          email: data.email,
-          password: data.password,
-        }
-      );
+ const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  try {
+    const res = await axios.post("/api/login", {
+      email: data.email,
+      password: data.password,
+    });
 
-      const token = res.data.token;
-
-      if (!token) {
-        throw new Error("invalid login");
-      }
-
-      localStorage.setItem("mydrive_token", token);
-      router.push("/");
-    } catch (error) {
-      console.error(error);
+    if (res.status === 200) {
+      router.push("/dashboard"); // or "/"
+      router.refresh(); // ensures middleware + cookies sync
     }
-  };
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white px-4">
