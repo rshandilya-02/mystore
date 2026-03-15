@@ -1,4 +1,4 @@
-const BACKEND_URL='http://localhost:4000'
+const BACKEND_URL=process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export const SIGNUP_URL = `${BACKEND_URL}/api/v1/auth/register`;
 export const SIGNIN_URL = `${BACKEND_URL}/api/v1/auth/login`;

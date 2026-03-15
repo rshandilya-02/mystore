@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 export default function CliLogin() {
 
-  const url = "http://localhost:4000/api/v1/auth/cli/authenticate";
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/cli/authenticate`;
 
   const searchParams = useSearchParams();
   const deviceId = searchParams.get("deviceId");
