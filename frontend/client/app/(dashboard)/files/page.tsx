@@ -4,7 +4,7 @@ import { FILE_LIST } from '@/services/api';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { DataTable } from './data-table';
-import {columns} from './columns.tsx'
+import {columns} from './columns'
 
 
 export default function FileList() {
