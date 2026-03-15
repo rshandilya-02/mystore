@@ -1,5 +1,6 @@
 import { api } from "../utils/apiClient.js";
 import { saveToken } from "../utils/config.js";
+import open from "open";
 
 export async function login() {
 
@@ -16,7 +17,10 @@ export async function login() {
     console.log("User code:", user_code);
     console.log("Open:", verification_url);
 
-    const url = "http://localhost:4000/api/v1/auth/cli/verification";
+    await open(verification_url);
+    console.log("after open");
+
+    const url = "/auth/cli/verification";
 
     let index = 0;
 
@@ -35,7 +39,7 @@ export async function login() {
         const response = await api.post(url,{device_code});
 
 
-        const data = await response.json();
+        const data = response;
 
         if(data.verified){
 

@@ -7,7 +7,7 @@ const getObject = async (req, res) => {
     // const data = req.body ; 
     const userId = req.userId;
     const { id } = req.body;
-    console.log('this is getObject userId and id ', userId, id);
+    // console.log('this is getObject userId and id ',userId,id);
     if (!userId || !id) {
         return res.status(200).json({
             message: "missing userId"
@@ -59,7 +59,7 @@ const putObject = async (req, res) => {
     const userId = req.userId;
     const command = new PutObjectCommand(input);
     const url = await getSignedUrl(client, command, { expiresIn: 3600 });
-    console.log('ready to hit db', input);
+    // console.log('ready to hit db',input);
     const dbEntry = await prisma.file.create({
         data: {
             file_original_name: file_name,
@@ -70,8 +70,8 @@ const putObject = async (req, res) => {
         }
     });
     // return url;
-    console.log('db entry is ', dbEntry);
-    console.log('put url is ', url);
+    // console.log('db entry is ',dbEntry);
+    // console.log('put url is ',url);
     return res.status(200).json({
         message: "presigned url fetched",
         url: url
@@ -91,7 +91,7 @@ const putObjectFolder = async (req, res) => {
         };
         const command = new PutObjectCommand(input);
         const url = await getSignedUrl(client, command, { expiresIn: 3600 });
-        console.log('ready to hit db', input);
+        // console.log('ready to hit db',input);
         const storageKey = Math.random().toString() + file.file_name;
         const dbEntry = await prisma.file.create({
             data: {
@@ -103,11 +103,11 @@ const putObjectFolder = async (req, res) => {
             }
         });
         // return url;
-        console.log('db entry is ', dbEntry);
-        console.log('put url is ', url);
+        // console.log('db entry is ',dbEntry);
+        // console.log('put url is ',url);
         return { filename: key, fileType: file.file_type, size: file.file_size, url: url };
     }));
-    console.log("urls is ", urls);
+    // console.log("urls is ",urls);
     return res.status(200).json({
         message: "presigned url fetched",
         url: urls
