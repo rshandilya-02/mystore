@@ -27,6 +27,7 @@ export default function LoginForm() {
     });
 
     if (res.status === 200) {
+      localStorage.setItem("mydrive_token",res.data.token);
       router.push("/"); // or "/"
       router.refresh(); // ensures middleware + cookies sync
     }

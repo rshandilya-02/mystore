@@ -39,7 +39,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({
-      message: "loggedin"
+      message: "loggedin",
+      token: data.token
     });
 
   } catch (error) {
