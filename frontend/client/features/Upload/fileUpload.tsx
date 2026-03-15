@@ -37,11 +37,11 @@ export default function FileUpload() {
       const file_type = file?.type;
       const file_size = file?.size;
 
-      const token = localStorage.getItem("mydrive_token");
-      if (!token) {
-        alert("token not found");
-        return;
-      }
+      // const token = localStorage.getItem("mydrive_token");
+      // if (!token) {
+      //   alert("token not found");
+      //   return;
+      // }
 
       const presigned_url = await axios.post(
         UPLOAD_URL,
