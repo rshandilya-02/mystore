@@ -4,8 +4,12 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Terminal, CloudUpload, Folder } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
+
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-black text-white">
 
@@ -30,7 +34,7 @@ export default function HomePage() {
         </p>
 
         <div className="flex justify-center gap-4 mt-10">
-          <Button className="bg-yellow-400 text-black hover:bg-yellow-300">
+          <Button className="bg-yellow-400 text-black hover:bg-yellow-300" onClick={()=>router.push('/upload')}>
             Get Started
           </Button>
 
