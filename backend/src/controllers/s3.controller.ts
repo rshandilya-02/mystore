@@ -219,7 +219,7 @@ const fetchList = async(req:Request,res:Response) => {
             }
         });
 
-        const filteredList = fetchFiles.map((file)=>{
+        const filteredList = fetchFiles.map((file:any,index:number)=>{
             const {storage_key, ...safeFile} = file;
             return safeFile;
         })
