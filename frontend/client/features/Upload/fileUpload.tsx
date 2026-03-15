@@ -67,6 +67,7 @@ export default function FileUpload() {
       const file_upload = await axios.put(url, file, {
         headers: {
           "Content-Type": file.type,
+          "x-amz-server-side-encryption": "AES256"
         },
       });
           setUploading(false);
