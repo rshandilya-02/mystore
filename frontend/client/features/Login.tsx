@@ -27,7 +27,7 @@ export default function LoginForm() {
     });
 
     if (res.status === 200) {
-      router.push("/dashboard"); // or "/"
+      router.push("/"); // or "/"
       router.refresh(); // ensures middleware + cookies sync
     }
 
