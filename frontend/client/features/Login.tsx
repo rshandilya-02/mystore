@@ -22,7 +22,7 @@ export default function LoginForm() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const res = await axios.post(
-        SIGNIN_URL,
+        "/api/login",
         {
           email: data.email,
           password: data.password,
