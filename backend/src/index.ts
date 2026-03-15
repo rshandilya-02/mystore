@@ -62,10 +62,10 @@ app.use('/api/v1/s3',s3Router);
 
 const port = process.env.PORT || 4000;
 
-app.listen(port,() => console.log("server started at port 4000"));
-
 app.get("/health",(req,res)=>{
     return res.status(200).json({
         message: "healthy"
     })
 })
+app.listen(port,() => console.log(`server started at port ${port}`));
+
