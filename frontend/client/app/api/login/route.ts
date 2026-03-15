@@ -7,6 +7,7 @@ export async function POST(req: Request) {
     const body = await req.json();
 
     console.log("LOGIN BODY:", body);
+    console.log("backend url ",process.env.NEXT_PUBLIC_BACKEND_URL);
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/login`,
