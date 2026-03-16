@@ -265,3 +265,59 @@
     transform: rotate(-360deg);
   }
 }
+
+@keyframes border-beam {
+  0% {
+    top: 0%;
+    left: -30%;
+  }
+  25% {
+    top: 0%;
+    left: 100%;
+  }
+  50% {
+    top: 100%;
+    left: 100%;
+  }
+  75% {
+    top: 100%;
+    left: -30%;
+  }
+  100% {
+    top: 0%;
+    left: -30%;
+  }
+}
+
+@keyframes beam-top {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes beam-right {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes beam-bottom {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes beam-left {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(-100%); }
+}
+
+@keyframes border-run {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+.animate-border-run {
+  animation: border-run 5s linear infinite;
+}

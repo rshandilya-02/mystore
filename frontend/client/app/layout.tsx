@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
+import { MyDriveLogo } from "@/components/ui/icon";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +30,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <nav className="absolute top-2 left-4 z-50">
+        <Link href="/" className="cursor-pointer">
+      <MyDriveLogo />
+      </Link>
+      </nav>
+        <ToastContainer position="bottom-right" autoClose={2500} toastStyle={{ backgroundColor: "black" }}></ToastContainer>
         {children}
       </body>
     </html>
