@@ -23,7 +23,7 @@ const auth = async(req:Request,res:Response,next:NextFunction) => {
     // console.log("this is req cookies ",req.cookies);
     const token = req.cookies.token || auth_token;
 
-
+    console.log("auth middleware token ",token);
     // console.log("cookies token is ",token);
 
     if(!token) return ; 
