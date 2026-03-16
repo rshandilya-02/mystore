@@ -18,7 +18,11 @@ export default function CliLogin() {
   const handleClick = async () => {
     try {
       setLoading(true);
-
+      const token = localStorage.getItem("mydrive_token");
+      if (!token) {
+        alert("token not found");
+        return;
+      }
       const response = await axios.post(
         url,
         {
@@ -27,10 +31,13 @@ export default function CliLogin() {
         },
         {
           withCredentials: true,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         }
       );
 
-      console.log("response is ", response);
+      // console.log("response is ", response);
 
       setSuccess(true);
     } catch (err) {
