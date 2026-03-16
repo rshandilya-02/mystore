@@ -3,12 +3,15 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Terminal, CloudUpload, Folder, Copy } from "lucide-react";
+import { Terminal, CloudUpload, Folder, Copy, Github } from "lucide-react";
 import { useRouter } from "next/navigation";
 import DemoTerminal from "./cliDemo";
 import { toast } from "react-toastify";
 import { TerminalIcon } from "lucide-react";
 import { MyDriveLogo } from "./ui/icon";
+import Image from "next/image";
+import Link from "next/link";
+
 
 export default function HomePage({loggedIn}:{loggedIn:boolean}) {
 
@@ -25,7 +28,13 @@ export default function HomePage({loggedIn}:{loggedIn:boolean}) {
       <nav className="justify-between mr-[1%] flex w-full gap-3 p-[1%]">
         <div >
         </div>
-        <div>
+        <div className="flex gap-4">
+          <Link href="https://github.com/rshandilya-02/mystore">
+          <Image src="/ghub.png"
+        alt="CLI file Upload screen"
+                width={40}
+                height={20}></Image>
+          </Link>
         {!loggedIn && <div className="flex gap-4">
         <div><Button className="bg-yellow-400 text-black hover:text-white hover:bg-yellow-600" onClick={()=>router.push("/register")}>SignUp</Button></div>
         <div><Button variant={"secondary"} className="text-black" onClick={()=>router.push("/login")}>Login</Button></div>
@@ -36,6 +45,8 @@ export default function HomePage({loggedIn}:{loggedIn:boolean}) {
         <div><Button variant={"secondary"} className="text-black" onClick={()=>router.push("/upload")}>Upload</Button></div>
         </div>
         }
+        <div></div>
+        
         </div>
       </nav>
      
@@ -155,6 +166,7 @@ transition-all duration-500">
       {/* Footer */}
       <footer className="border-t border-zinc-800 py-10 text-center text-gray-500 flex gap-5 justify-center items-center">
         Built for developers who love the terminal. <span className="text-yellow-400"><Terminal className=""></Terminal></span>
+       
       </footer>
     </div>
   );
