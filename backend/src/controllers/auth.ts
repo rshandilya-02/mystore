@@ -182,6 +182,7 @@ const validateCli = async(req:Request,res:Response) => {
     try {
 
     //this device_code should be fetched from query_params to body 
+    console.log("inside validate cli ");
     const {device_code,user_code}:{device_code:string,user_code:string} = req.body;
     console.log("this is validata cli ",device_code,user_code);
     const id = req.userId;
