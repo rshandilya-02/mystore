@@ -321,3 +321,26 @@
 .animate-border-run {
   animation: border-run 5s linear infinite;
 }
+
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #FACC15; 
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #EAB308; 
+}
+
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #FACC15 #000000;
+}

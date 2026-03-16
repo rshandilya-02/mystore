@@ -30,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <nav className="absolute top-2 left-4 z-50">
+        <nav className="absolute top-2 left-4 z-50 fixed">
         <Link href="/" className="cursor-pointer">
       <MyDriveLogo />
       </Link>

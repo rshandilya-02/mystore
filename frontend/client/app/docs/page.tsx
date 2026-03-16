@@ -5,6 +5,7 @@ import { Copy, Terminal, Upload, Folder, LogIn } from "lucide-react"
 import { toast } from "react-toastify"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 
 const sections = [
@@ -40,7 +41,7 @@ export default function DocsPage() {
   const router = useRouter();
 
   return (
-    <div className="h-screen bg-black text-white flex">
+    <div className="min-h-screen bg-black text-white flex ">
 
       {/* Sidebar */}
       <aside className="w-64 border-r border-zinc-800 p-6  pt-16 hidden md:block sticky  top-0 h-screen overflow-y-auto">
@@ -113,9 +114,36 @@ export default function DocsPage() {
 
 
           <Command cmd="mydrive login" />
+          <div className="flex justify-center items-center mt-8 bg-zinc-950 rounded-lg p-3 ">
+         <Image src="/login1.jpeg"
+  alt="CLI login screen"
+  width={600}
+  height={300} className="rounded-xl  shadow-lg "></Image>
+  </div>
         </section>
 
         {/* Upload File */}
+        {/* List Files */}
+        <section id="folder" className="space-y-4">
+          <h2 className="text-2xl font-semibold text-green-400">
+            List Uploaded Files
+          </h2>
+
+          <p className="text-gray-400">
+            Recursively upload an entire folder.
+          </p>
+
+          <Command cmd="mydrive listFiles" />
+
+          <div className="flex justify-center items-center mt-8 bg-black rounded-sm p-3 ">
+          <Image src="/flist-2.jpeg"
+                alt="cli filelist"
+                width={600}
+                height={300} className="rounded-sm  shadow-lg ">
+
+                </Image>
+                </div>
+        </section>
         <section id="file" className="space-y-4">
           <h2 className="text-2xl font-semibold text-green-400">
             Upload File
@@ -125,8 +153,18 @@ export default function DocsPage() {
             Upload a single file to S3 bucket.
           </p>
 
-          <Command cmd="mydrive upload file.txt" />
+          <Command cmd="mydrive upload <file_path>" />
+
+          <div className="flex justify-center items-center mt-8 bg-black rounded-sm p-3 ">
+          <Image src="/fupload1.jpeg"
+                alt="CLI file Upload screen"
+                width={600}
+                height={300} className="rounded-sm  shadow-lg ">
+
+                </Image>
+                </div>
         </section>
+
 
         {/* Upload Folder */}
         <section id="folder" className="space-y-4">
@@ -138,7 +176,16 @@ export default function DocsPage() {
             Recursively upload an entire folder.
           </p>
 
-          <Command cmd="mydrive upload -d ./photos" />
+          <Command cmd="mydrive upload -d <folder_path>" />
+
+          <div className="flex justify-center items-center mt-8 bg-black rounded-sm p-3 ">
+          <Image src="/folderUpload.jpeg"
+                alt="CLI file Upload screen"
+                width={600}
+                height={300} className="rounded-sm  shadow-lg ">
+
+                </Image>
+                </div>
         </section>
 
         {/* Deletion and Downloads */}

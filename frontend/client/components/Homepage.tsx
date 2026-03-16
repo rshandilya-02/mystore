@@ -27,10 +27,15 @@ export default function HomePage({loggedIn}:{loggedIn:boolean}) {
         </div>
         <div>
         {!loggedIn && <div className="flex gap-4">
-        <div><Button className="bg-yellow-400 text-black hover:text-white hover:bg-yellow-600" onClick={()=>router.push("/register")}>signUp</Button></div>
+        <div><Button className="bg-yellow-400 text-black hover:text-white hover:bg-yellow-600" onClick={()=>router.push("/register")}>SignUp</Button></div>
         <div><Button variant={"secondary"} className="text-black" onClick={()=>router.push("/login")}>Login</Button></div>
         </div>
-        }   
+        }
+       {loggedIn && <div className="flex gap-4">
+        <div><Button className="bg-yellow-400 text-black hover:text-white hover:bg-yellow-600" onClick={()=>router.push("/files")}>Files</Button></div>
+        <div><Button variant={"secondary"} className="text-black" onClick={()=>router.push("/upload")}>Upload</Button></div>
+        </div>
+        }
         </div>
       </nav>
      
