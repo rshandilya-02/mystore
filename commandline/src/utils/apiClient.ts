@@ -1,7 +1,7 @@
 import { getToken } from "./config.js";
 
 
-const BASE_URL = "http://localhost:4000/api/v1";
+const BASE_URL = "https://mystore-3-7114.onrender.com/api/v1";
 
 async function request(endpoint: string,options: any  = {}) {
 
@@ -38,7 +38,7 @@ export const api = {
         return request(endpoint,{method: "GET"})
     },
     post(endpoint: string , body: any) {
-        console.log("body is ",body);
+        // console.log("body is ",body);
         return request(endpoint,{
             method: "POST",
             body: JSON.stringify(body)

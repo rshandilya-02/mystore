@@ -1,11 +1,19 @@
+#!/usr/bin/env node
+
 import { Command } from "commander";
 import figlet from "figlet";
+import gradient from "gradient-string";
+
 
 import { login } from "./commands/login.js";
 import { fetchFiles } from "./commands/fetchFiles.js";
 import { fileUpload, folderUpload } from "./commands/fileUpload.js";
 
-console.log(figlet.textSync("myDrive"));
+console.log(
+  gradient.pastel.multiline(
+    figlet.textSync("MyDrive", { horizontalLayout: "full" })
+  )
+);
 
 const program = new Command();
 

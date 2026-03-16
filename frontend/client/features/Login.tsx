@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { SIGNIN_URL } from "@/services/api";
+import { useState } from "react";
 
 type Inputs = {
   email: string;
@@ -11,6 +12,7 @@ type Inputs = {
 };
 
 export default function LoginForm() {
+  const [loading,setLoading] = useState(false);
   const router = useRouter();
 
   const {
@@ -20,6 +22,7 @@ export default function LoginForm() {
   } = useForm<Inputs>();
 
  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  setLoading(true);
   try {
     const res = await axios.post("/api/login", {
       email: data.email,
@@ -28,12 +31,19 @@ export default function LoginForm() {
 
     if (res.status === 200) {
       localStorage.setItem("mydrive_token",res.data.token);
-      router.push("/"); // or "/"
-      router.refresh(); // ensures middleware + cookies sync
+
+      setTimeout(() => {
+    router.push("/");
+    router.refresh();
+  }, 300);
+      // router.push("/"); // or "/"
+      // router.refresh(); // ensures middleware + cookies sync
     }
 
   } catch (error) {
     console.error(error);
+  }finally{
+    setLoading(false);
   }
 };
 
@@ -114,6 +124,14 @@ export default function LoginForm() {
           </p>
         </form>
       </div>
+      
+     
+      {loading && <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="dash uno"></div>
+          <div className="dash dos"></div>
+          <div className="dash tres"></div>
+          <div className="dash cuatro"></div>
+      </div>}
     </div>
   );
 }

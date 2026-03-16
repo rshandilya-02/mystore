@@ -143,7 +143,7 @@ const cliLogin = async(req:Request,res:Response) => {
         
         //generate userId 
     
-        const verificationUrl = `http://localhost:3000/authentication?deviceId=${deviceId}`;
+        const verificationUrl = `https://mystore-olive.vercel.app/authentication?deviceId=${deviceId}`;
 
         const expiryDate = new Date(Date.now()+5*60*1000);
 

@@ -1,28 +1,57 @@
 import { api } from "../utils/apiClient.js";
 import { saveToken } from "../utils/config.js";
 import open from "open";
+import ora, { type Color } from "ora";
+import chalk from "chalk";
+import boxen from 'boxen';
+
+
 
 export async function login() {
 
+    const spinner = ora({
+        text: chalk.cyan("Requesting device authorization..."),
+        spinner: "dots"
+    }).start();
+
     const response = await fetch(
-        "http://localhost:4000/api/v1/auth/cli/getCliToken"
+        "https://mystore-3-7114.onrender.com/api/v1/auth/cli/getCliToken"
     );
 
     const data = await response.json();
+
+    spinner.succeed(chalk.green("Device authorization received"));
 
     const device_code = data.deviceId;
     const user_code = data.userCode;
     const verification_url = data.verificationUrl;
 
-    console.log("User code:", user_code);
+   console.log(
+  boxen(
+    chalk.bold.cyan(user_code),
+    {
+      padding: 1,
+      margin: 1,
+      borderStyle: "round",
+      borderColor: "yellow",
+      title: "Verification Code",
+      titleAlignment: "center"
+    }
+  )
+);
     console.log("Open:", verification_url);
 
+    console.log(chalk.gray("Opening browser for verification..."));
+
     await open(verification_url);
-    console.log("after open");
 
     const url = "/auth/cli/verification";
 
-    let index = 0;
+  const spinner1 = ora("Waiting for authentication...").start();
+
+    const colors:Color[] = ["yellow", "cyan", "magenta", "green"];
+
+let index = 0;
 
     while (index < 25) {
 
@@ -36,6 +65,8 @@ export async function login() {
         //     })
         // });
 
+      spinner1.color = colors[index % colors.length] ?? "cyan";
+
         const response = await api.post(url,{device_code});
 
 
@@ -43,9 +74,11 @@ export async function login() {
 
         if(data.verified){
 
+               spinner1.succeed("Login successful!");
+
             saveToken(data.token);
 
-            console.log("Login successful!");
+            spinner.succeed("Done");
 
             return;
         }
@@ -55,5 +88,5 @@ export async function login() {
         await new Promise(r => setTimeout(r,5000));
     }
 
-    console.log("Login timeout");
+     spinner1.fail(chalk.red("Login timeout. Please try again."));
 }
